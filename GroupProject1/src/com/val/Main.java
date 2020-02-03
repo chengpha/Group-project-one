@@ -1,73 +1,31 @@
 package com.val;
 
-import com.google.gson.Gson;
-import org.apache.commons.io.FilenameUtils;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.MessageFormat;
 
 public class Main {
 
     public static void main(String[] args) {
-        Gson gson = new Gson();
-        List<Shipment> shipmentList = new ArrayList<>();
-        List<Warehouse> warehouseList = new ArrayList<>();
+        Run run = new Run();
+        //read in all json shipment files from "input" directory and move them to "processed" directory after processing;
+        run.processJsonInputFiles(MessageFormat.format("{0}/input", System.getProperty("user.dir")),
+                MessageFormat.format("{0}/processed", System.getProperty("user.dir")));
 
-        //read in all json shipment files from the input directory
-        try {
-            Files.walk(Paths.get(String.format(System.getProperty("user.dir"), "%s/input")))
-                    .filter(f -> {
-                        if (FilenameUtils.getExtension(String.valueOf(f)).contains("json")) return true;
-                        else return false;
-                    })
-                    .forEach(f -> {
-                        try (Reader reader = new FileReader(String.valueOf(f))) {
-                            List<Shipment> list = gson.fromJson(reader, Shipments.class).getShipmentList();
-                            shipmentList.addAll(list);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-        } catch (IOException e) {
-            e.printStackTrace();
+        //create warehouses if they do not exist; add shipments to warehouses;
+        //duplicate shipments are not allowed;
+        run.addShipmentsToWarehouses();
+
+        //get the first warehouse in the array and export its shipments to output directory
+        if (!run.getWarehouseList().isEmpty()) {
+            Warehouse warehouse = run.getWarehouseList().get(0);
+            run.exportAllShipmentsFromWarehouse(warehouse, MessageFormat.format( "{0}/output",System.getProperty("user.dir")));
         }
 
-        //create warehouses if they do not exist; add the shipments to the warehouses
-        for (Shipment s : shipmentList) {
-            Warehouse warehouse;
-            if (warehouseList.stream().noneMatch(w -> w.getWarehouseId().equals(s.getWarehouseId()))) {
-                warehouse = new Warehouse(s.getWarehouseId());
-                warehouseList.add(warehouse);
-            } else
-                warehouse = warehouseList.stream()
-                        .filter(w -> w.getWarehouseId().equals(s.getWarehouseId()))
-                        .findFirst()
-                        .get();
-
-            if(warehouse.addShipment(s))
-                System.out.printf("The shipment %s has been added to the warehouse %s.%n",
-                        s.getShipmentId(),
-                        warehouse.getWarehouseId());
-            else
-                System.out.printf(
-                        "Freight receipt is disabled for the warehouse: %s. The shipment %s has not been added.%n",
-                        warehouse.getWarehouseId(),
-                        s.getShipmentId());
+        //show the list of all shipments for each warehouse
+        System.out.println("\n\nShow the list of all shipments for each warehouse: ");
+        for (Warehouse w : run.getWarehouseList()) {
+            System.out.println(w.getWarehouseId()+":");
+            System.out.println("\t\t"+ w.exportAllShipmentsAsJsonString());
         }
-
-        System.out.println("======================");
-        for (Warehouse warehouse : warehouseList) {
-            System.out.println(warehouse.getWarehouseId());
-            System.out.println(warehouse.exportAllShipmentsAsJsonString());
-        }
-        System.out.println("======================");
     }
 }
 

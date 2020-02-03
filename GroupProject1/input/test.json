@@ -1,6 +1,5 @@
 {
-  "warehouse_contents": [
-    {
+  "warehouse_contents": [{
       "warehouse_id": "12513",
       "shipment_method": "air",
       "shipment_id": "48934j",
