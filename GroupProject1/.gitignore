@@ -3,4 +3,7 @@ MavenDir/src
 MavenDir/target
 *.iml
 ../.idea/
+out/
+.idea/
+../.idea/
 
