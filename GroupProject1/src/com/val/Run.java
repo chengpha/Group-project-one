@@ -19,14 +19,13 @@ import static java.nio.file.Files.move;
 
 public class Run {
     private Gson gson = new Gson();
-    private List<Shipment> shipmentList = new ArrayList<>();
+    private List<Shipment> shipmentList;
     private List<Warehouse> warehouseList = new ArrayList<>();
 
     public Run(){}
 
-    public List<Warehouse> getWarehouseList(){return warehouseList;}
-
-    public void processJsonInputFiles(String input, String processed){
+    public List<Shipment> processJsonInputFiles(String input, String processed){
+        shipmentList = new ArrayList<>();
         try {
             Files.walk(Paths.get(input))
                     .filter(f -> {
@@ -62,10 +61,11 @@ public class Run {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return shipmentList;
     }
 
-    public void addShipmentsToWarehouses(){
-        for (Shipment s : shipmentList) {
+    public List<Warehouse> addShipmentsToWarehouses(List<Shipment> shipments){
+        for (Shipment s : shipments) {
             Warehouse warehouse;
             if (warehouseList.stream().noneMatch(w -> w.getWarehouseId().equals(s.getWarehouseId()))) {
                 warehouse = new Warehouse(s.getWarehouseId());
@@ -90,6 +90,7 @@ public class Run {
                         s.getShipmentId(),
                         warehouse.getWarehouseId());
         }
+        return warehouseList;
     }
 
     public void exportAllShipmentsFromWarehouse(Warehouse warehouse, String location){
