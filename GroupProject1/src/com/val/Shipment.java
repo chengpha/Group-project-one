@@ -14,4 +14,8 @@ public class Shipment {
         this.weight = weight;
         this.receipt_date = receipt_date;
     }
+
+    public String getShipmentId(){ return shipment_id; }
+
+    public String getWarehouseId(){ return warehouse_id; }
 }
