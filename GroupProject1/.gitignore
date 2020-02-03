@@ -1,0 +1,6 @@
+MavenDir/MavenDir.iml
+MavenDir/src
+MavenDir/target
+*.iml
+../.idea/
+
