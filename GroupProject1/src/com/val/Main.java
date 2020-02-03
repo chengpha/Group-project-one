@@ -18,7 +18,7 @@ public class Main {
         List<Shipment> shipmentList = new ArrayList<>();
         List<Warehouse> warehouseList = new ArrayList<>();
 
-        //read in all json shipment files from the project directory
+        //read in all json shipment files from the input directory
         try {
             Files.walk(Paths.get(String.format(System.getProperty("user.dir"), "%s/input")))
                     .filter(f -> {
