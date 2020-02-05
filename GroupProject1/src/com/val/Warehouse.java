@@ -24,8 +24,8 @@ public class Warehouse {
             if (shipments.stream().noneMatch(s -> s.getShipmentId().equals(shipment.getShipmentId()))) {
                 shipments.add(shipment);
                 return true;
-            } else return false;
-        else return false;
+            } 
+        return false;
     }
 
     public String getWarehouseId (){ return warehouse_id;}
