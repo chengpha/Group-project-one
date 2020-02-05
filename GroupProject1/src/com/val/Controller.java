@@ -95,7 +95,7 @@ public class Controller {
         }
     }
 
-    public void listAllWarehousesWithShipments(){
+    public void printAllWarehousesWithShipments(){
         System.out.println("\n\nShow the list of all shipments for each warehouse: ");
         for (Warehouse w : warehouseList) {
             System.out.println(w.getWarehouseId()+":");

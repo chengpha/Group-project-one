@@ -44,7 +44,7 @@ public class Warehouse {
         return new Gson().toJson(new Shipments(shipments));
     }
 
-    public void exportAllShipmentsFromWarehouse(String location){
+    public void exportAllShipmentsToFile(String location){
         if (Files.exists(Paths.get(location))) {
             String json = exportAllShipmentsToJsonString();
             try {
