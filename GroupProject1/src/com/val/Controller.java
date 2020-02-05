@@ -18,8 +18,13 @@ public class Controller {
 
     public Controller(){}
 
-    public List<Warehouse> processJsonInputFile(String input, String processed){
+    public List<Warehouse> getWarehouseList(){
+        return warehouseList;
+    }
+
+    public String processJsonInputFile(String input, String processed){
         List<Shipment> shipmentList = new ArrayList<>();
+        String msg = "";
 
         //check if file exists
         if (Files.exists(Paths.get(input))) {
@@ -54,16 +59,16 @@ public class Controller {
 
                 //if the freight receipt in the warehouse is disabled, do not add any shipments
                 if(!warehouse.isFreightReceiptEnabled()){
-                    System.out.printf("Freight receipt is disabled for warehouse %s.%n", warehouse.getWarehouseId());
+                     msg += String.format("Freight receipt is disabled for warehouse %s.%n", warehouse.getWarehouseId());
                     continue;
                 }
 
                 if(warehouse.addShipment(s))
-                    System.out.printf("Shipment %s has been added to the warehouse %s.%n",
+                    msg += String.format("Shipment %s has been added to the warehouse %s.%n",
                             s.getShipmentId(),
                             warehouse.getWarehouseId());
                 else
-                    System.out.printf(
+                    msg += String.format(
                             "Duplicate shipment ID: %s for the warehouse: %s. The shipment won't be added.%n",
                             s.getShipmentId(),
                             warehouse.getWarehouseId());
@@ -85,21 +90,20 @@ public class Controller {
             }
 
             if (check != null)
-                System.out.printf("File %s has been moved successfully to %s %n", f.getName(), processed);
+                msg += String.format("File %s has been successfully moved to %s %n", f.getName(), processed);
             else
-                System.out.printf("Failed to move %s file to %s %n", f.getName(), processed);
+                msg += String.format("Failed to move %s file to %s %n", f.getName(), processed);
 
-            return warehouseList;
+            return msg;
         } else {
-            return null;
+            return String.format("File specified does not exist: %s  %n", input);
         }
     }
 
-    public void printAllWarehousesWithShipments(){
-        System.out.println("\n\nShow the list of all shipments for each warehouse: ");
-        for (Warehouse w : warehouseList) {
-            System.out.println(w.getWarehouseId()+":");
-            System.out.println("\t\t"+ w.exportAllShipmentsToJsonString());
-        }
+    public String printAllWarehousesWithShipments(){
+        String msg = "";
+        for (Warehouse w : warehouseList)
+            msg += String.format("Warehouse ID - " + w.getWarehouseId()+":%n\t\t"+ w.exportAllShipmentsToJsonString() +"%n");
+        return msg;
     }
 }
