@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //THIS CLASS IS PURELY USED FOR THE TESTING OF THE PROJECT
+        //THIS CLASS IS PURELY USED FOR TESTING OF THE PROJECT
         Controller controller = new Controller();
 
         //read in all json shipment files from "input" directory and move them to "processed" directory after processing;
