@@ -36,7 +36,7 @@ public class Controller {
                 List<Shipment> list = gson.fromJson(reader, Shipments.class).getShipmentList();
                 shipmentList.addAll(list);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                msg = "File not found";
             } catch (IOException e) {
                 e.printStackTrace();
             }
