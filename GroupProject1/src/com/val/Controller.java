@@ -30,7 +30,7 @@ public class Controller {
         if (Files.exists(Paths.get(input))) {
             File f = new File(input);
             if (!FilenameUtils.getExtension(String.valueOf(f)).contains("json"))
-                return null;
+                return "The file is not a JSON file.";
 
             try (Reader reader = new FileReader(String.valueOf(f))) {
                 List<Shipment> list = gson.fromJson(reader, Shipments.class).getShipmentList();
