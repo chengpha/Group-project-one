@@ -60,7 +60,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UIDisplay">
+  <component name="RunManager" selected="Application.Main (1)">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ics372.Main" />
       <module name="Group_one_project" />
@@ -114,8 +114,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.UIDisplay" />
         <item itemvalue="Application.Main (1)" />
+        <item itemvalue="Application.UIDisplay" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
