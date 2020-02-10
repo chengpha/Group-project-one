@@ -5,7 +5,7 @@ import java.sql.SQLOutput;
 import java.text.MessageFormat;
 import java.util.List;
 
-import javafx.application.Application;
+import javafx.application .Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -253,7 +253,7 @@ public class UIDisplay extends Application {
             System.out.println(controller.printAllWarehousesWithShipments());
 
             System.out.println("Button 2 press.");
-            TextField2.setText("Button2 pressed.");
+            TextField2.setText("Button 2 pressed.");
         });
 
         Button1.setOnAction(e -> {
