@@ -126,10 +126,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Added logic to enable/end freight receipt. File chooser uses class field instead of local method variable now." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1350" y="115" key="CommitChangelistDialog2" timestamp="1581359189639">
+    <state x="-1350" y="115" key="CommitChangelistDialog2" timestamp="1581360782946">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1350" y="115" key="CommitChangelistDialog2/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1581359189639" />
+    <state x="-1350" y="115" key="CommitChangelistDialog2/-1920.0.1920.1040/0.0.1920.1040/-3840.0.1920.1040@-1920.0.1920.1040" timestamp="1581360782946" />
     <state x="-1180" y="276" key="FileChooserDialogImpl" timestamp="1581358846196">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
