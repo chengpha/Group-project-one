@@ -48,7 +48,7 @@ public class Controller {
 
             //if the freight receipt in the warehouse is disabled, do not add any shipments
             if (!warehouse.isFreightReceiptEnabled()) {
-                msg += String.format("Freight receipt is disabled for warehouse %s.Shipment %s won't be added.%n",
+                msg += String.format("Freight receipt is disabled for warehouse %s.%nShipment %s won't be added.%n",
                         warehouse.getWarehouseId(),
                         s.getShipmentId());
                 continue;
@@ -60,7 +60,7 @@ public class Controller {
                         warehouse.getWarehouseId());
             else
                 msg += String.format(
-                        "Duplicate shipment ID: %s for warehouse: %s. Shipment won't be added.%n",
+                        "Duplicate shipment ID: %s for warehouse: %s.%nShipment won't be added.%n",
                         s.getShipmentId(),
                         warehouse.getWarehouseId());
         }
