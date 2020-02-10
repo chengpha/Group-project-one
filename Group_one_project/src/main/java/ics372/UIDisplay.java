@@ -119,11 +119,9 @@ public class UIDisplay extends Application {
             input = JOptionPane.showInputDialog("Enter receipt date ID:");
             Long receipt_date = Long.parseLong(input);
 
-
             Shipment shipment = new Shipment(warehouse_id,shipment_id,shipment_method,weight,receipt_date);
             Warehouse warehouse = new Warehouse(warehouse_id);
             warehouse.addShipment(shipment);
-
 
             //String ship_id = JOptionPane.showInputDialog("Enter Shipment ID:");
             centerTA.setText("addIncomingShipmentBTN " +
