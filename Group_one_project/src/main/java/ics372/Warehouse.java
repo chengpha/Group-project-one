@@ -8,7 +8,7 @@ import java.util.List;
 public class Warehouse {
     private String warehouse_id;
     private List<Shipment> shipments = new ArrayList<>();
-    boolean freightReceiptEnable = true;
+    private boolean freightReceiptEnable = true;
 
     public Warehouse(String warehouse_id){
         this.warehouse_id = warehouse_id;
