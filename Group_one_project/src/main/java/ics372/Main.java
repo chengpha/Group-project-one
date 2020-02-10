@@ -19,7 +19,6 @@ public class Main {
         //get the first warehouse in the array and export its shipments to output directory
         if(controller.getWarehouseList().isEmpty())
             return;
-
         Warehouse warehouse = controller.getWarehouseList().get(0);
         warehouse.exportAllShipmentsToFile(MessageFormat.format( "{0}/output",System.getProperty("user.dir")));
 

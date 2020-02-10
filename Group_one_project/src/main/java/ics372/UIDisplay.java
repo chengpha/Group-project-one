@@ -1,7 +1,9 @@
 package ics372;
 
 import java.io.File;
+import java.sql.SQLOutput;
 import java.text.MessageFormat;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -15,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import javax.swing.*;
 
 public class UIDisplay extends Application {
     File fileInput;
@@ -101,20 +105,123 @@ public class UIDisplay extends Application {
         // ADD THE LOGIC TO ADD INCOMING SHIPMENT
         addIncomingShipmentBTN.setOnAction(e -> {
             //ENTER LOGIC HERE
-            centerTA.setText("addIncomingShipmentBTN press");
+            //Warehouse wh = new Warehouse();
+            //wh.add(input);
+            String input;
+            input = JOptionPane.showInputDialog("Enter Warehouse ID:");
+            String warehouse_id = input;
+            input = JOptionPane.showInputDialog("Enter Shipment ID:");
+            String shipment_id = input;
+            input = JOptionPane.showInputDialog("Enter shipment method ID:");
+            String shipment_method = input;
+            input = JOptionPane.showInputDialog("Enter weight:");
+            Double weight = Double.parseDouble(input);
+            input = JOptionPane.showInputDialog("Enter receipt date ID:");
+            Long receipt_date = Long.parseLong(input);
+
+
+            Shipment shipment = new Shipment(warehouse_id,shipment_id,shipment_method,weight,receipt_date);
+            Warehouse warehouse = new Warehouse(warehouse_id);
+            warehouse.addShipment(shipment);
+
+
+            //String ship_id = JOptionPane.showInputDialog("Enter Shipment ID:");
+            centerTA.setText("addIncomingShipmentBTN " +
+                    "\n" + warehouse_id + "\n" + shipment_id + "\n" + shipment_method + "\n" + weight + "\n" + receipt_date);
         });
 
         // ADD THE LOGIC TO ENABLE FREIGHT RECEIPT
         enableFreightReceiptBTN.setOnAction(e -> {
             //ENTER LOGIC HERE
-            centerTA.setText("enableFreightReceiptBTN press");
+            //FileChooser fileChooser = new FileChooser();
+            Controller controller = new Controller();
 
+            //This is selecting the JSON file
+            // fileToBeRead = fileChooser.showOpenDialog(primaryStage);
+
+            //read in all json shipment files from "input" directory and move them to "processed" directory after processing;
+//
+            String msg = controller.processJsonInputFile(fileInput.toString(),
+                    System.getProperty("user.home") + "/Desktop");
+            System.out.println(msg);
+
+            // list of warehouses for easier access
+            List<Warehouse> warehouses = controller.getWarehouseList();
+
+            // array of ids used for options
+            String[] warehouseIds = new String[warehouses.size()];
+            for (int i = 0; i < warehouses.size(); i++)
+            {
+                warehouseIds[i] = warehouses.get(i).getWarehouseId();
+            }
+
+            // Shows input dialog for choosing a warehouse to have freight status enabled
+            String chosenWarehouseId = (String) JOptionPane.showInputDialog(null,
+                                                                            "Choose a warehouse to have freight status enabled.",
+                                                                            "Enable Freight Status",
+                                                                            JOptionPane.QUESTION_MESSAGE,
+                                                                            null,
+                                                                            warehouseIds,           // array of choices
+                                                                            warehouseIds[0]);       // default choice
+
+            centerTA.setText("Freight Receipt has been enabled for warehouse " + chosenWarehouseId + ".");
+
+            // prints out freight receipt status of each warehouse
+            for(Warehouse wh : warehouses)
+            {
+                if(chosenWarehouseId.equals(wh.getWarehouseId()))
+                {
+                    wh.enableFreightReceipt();
+                }
+                centerTA.appendText("\nWarehouse " + wh.getWarehouseId() + " - Freight Receipt Status: " + (wh.freightReceiptEnable ? "Enabled" : "Disabled"));
+            }
         });
 
         // ADD END FREIGHT RECEIPT
         endFreightReceiptBTN.setOnAction(e -> {
             //ENTER LOGIC HERE
-            centerTA.setText("endFreightReceiptBTN press");
+            //FileChooser fileChooser = new FileChooser();
+            Controller controller = new Controller();
+
+            //This is selecting the JSON file
+            //File fileToBeRead = fileChooser.showOpenDialog(primaryStage);
+
+            //read in all json shipment files from "input" directory and move them to "processed" directory after processing;
+//
+            String msg = controller.processJsonInputFile(fileInput.toString(),
+                    System.getProperty("user.home") + "/Desktop");
+            System.out.println(msg);
+
+            // list of warehouses for easier access
+            List<Warehouse> warehouses = controller.getWarehouseList();
+
+            // array of ids used for input dialog options
+            String[] warehouseIds = new String[warehouses.size()];
+            for (int i = 0; i < warehouses.size(); i++)
+            {
+                warehouseIds[i] = warehouses.get(i).getWarehouseId();
+            }
+
+            // Shows input dialog for choosing a warehouse to have freight status disabled
+            String chosenWarehouseId = (String) JOptionPane.showInputDialog(null,
+                                                                            "Choose a warehouse to have freight status enabled.",
+                                                                            "Disable Freight Status",
+                                                                            JOptionPane.QUESTION_MESSAGE,
+                                                                            null,
+                                                                            warehouseIds,           // array of choices
+                                                                            warehouseIds[0]);       // default choice
+
+            centerTA.setText("Freight Receipt has been disabled for warehouse " + chosenWarehouseId + ".");
+
+            // prints out freight receipt status of each warehouse
+            for(Warehouse wh : warehouses)
+            {
+                if(chosenWarehouseId.equals(wh.getWarehouseId()))
+                {
+                    wh.disableFreightReceipt();
+                }
+                centerTA.appendText("\nWarehouse " + wh.getWarehouseId() + " - Freight Receipt Status: " + (wh.freightReceiptEnable ? "Enabled" : "Disabled"));
+            }
         });
 
 
@@ -123,11 +230,12 @@ public class UIDisplay extends Application {
             Controller controller = new Controller();
 
             //This is selecting the JSON file
-            File fileToBeRead = fileChooser.showOpenDialog(primaryStage);
+            //File fileToBeRead = fileChooser.showOpenDialog(primaryStage);
+            fileInput = fileChooser.showOpenDialog(primaryStage);
 
             //read in all json shipment files from "input" directory and move them to "processed" directory after processing;
 //
-            String msg = controller.processJsonInputFile(fileToBeRead.toString(),
+            String msg = controller.processJsonInputFile(fileInput.toString(),
                     System.getProperty("user.home") + "/Desktop");
 //            System.out.println(msg);
 
