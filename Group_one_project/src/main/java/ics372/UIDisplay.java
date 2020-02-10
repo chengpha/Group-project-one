@@ -3,7 +3,7 @@ package ics372;
 import java.io.File;
 import java.text.MessageFormat;
 
-import javafx.application.Application;
+import javafx.application .Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import javax.swing.*;
 
 public class UIDisplay extends Application {
     File fileInput;
@@ -101,7 +103,27 @@ public class UIDisplay extends Application {
         // ADD THE LOGIC TO ADD INCOMING SHIPMENT
         addIncomingShipmentBTN.setOnAction(e -> {
             //ENTER LOGIC HERE
-            centerTA.setText("addIncomingShipmentBTN press");
+            //Warehouse wh = new Warehouse();
+            //wh.add(input);
+            String input;
+            input = JOptionPane.showInputDialog("Enter Warehouse ID:");
+            String warehouse_id = input;
+            input = JOptionPane.showInputDialog("Enter Shipment ID:");
+            String shipment_id = input;
+            input = JOptionPane.showInputDialog("Enter shipment method ID:");
+            String shipment_method = input;
+            input = JOptionPane.showInputDialog("Enter weight:");
+            Double weight = Double.parseDouble(input);
+            input = JOptionPane.showInputDialog("Enter receipt date ID:");
+            Long receipt_date = Long.parseLong(input);
+
+            Shipment shipment = new Shipment(warehouse_id,shipment_id,shipment_method,weight,receipt_date);
+            Warehouse warehouse = new Warehouse(warehouse_id);
+            warehouse.addShipment(shipment);
+
+            //String ship_id = JOptionPane.showInputDialog("Enter Shipment ID:");
+            centerTA.setText("addIncomingShipmentBTN " +
+                    "\n" + warehouse_id + "\n" + shipment_id + "\n" + shipment_method + "\n" + weight + "\n" + receipt_date);
         });
 
         // ADD THE LOGIC TO ENABLE FREIGHT RECEIPT
@@ -147,7 +169,7 @@ public class UIDisplay extends Application {
             System.out.println(controller.printAllWarehousesWithShipments());
 
             System.out.println("Button 2 press.");
-            TextField2.setText("Button2 pressed.");
+            TextField2.setText("Button 2 pressed.");
         });
 
         Button1.setOnAction(e -> {
