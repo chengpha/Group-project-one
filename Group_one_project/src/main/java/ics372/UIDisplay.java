@@ -1,7 +1,6 @@
 package ics372;
 
 import java.io.File;
-import java.sql.SQLOutput;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import javax.swing.*;
 
 public class UIDisplay extends Application {
     File fileInput;
-    String fileName;
+
 
     public void start(Stage primaryStage) {
         // Primary pane layout is BorderPane.
