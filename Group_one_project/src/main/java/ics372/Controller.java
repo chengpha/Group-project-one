@@ -1,6 +1,16 @@
 package ics372;
 
+/**
+ * Class ICS 372 Spring 2020
+ * Programming Assignment 1
+ *
+ * @authors: Valentin Kalenik, Cheng Pha, Luke Pha,Tommy Moua, Tina Martinez, Jesus Flores
+ * <p>
+ * Controller Class
+ */
+
 import com.google.gson.Gson;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +79,7 @@ public class Controller {
         }
 
 
-        String fileHasBeenRead = f.getName()+ " has been imported.\n";
+        String fileHasBeenRead = f.getName() + " has been imported.\n";
         return fileHasBeenRead + msg;
     }
 

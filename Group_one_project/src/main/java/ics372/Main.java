@@ -1,4 +1,15 @@
 package ics372;
+/**
+ * Class ICS 372 Spring 2020
+ * Programming Assignment 1
+ *
+ * @authors: Valentin Kalenik, Cheng Pha, Luke Pha,Tommy Moua, Tina Martinez, Jesus Flores
+ *
+ * The main class will allow the user to interact with the program. The user will be able to import a json
+ * file to the program. The program reads a JSON file to retrieve all shipments to warehouses,
+ * adds shipments, enables/disables shipments to a warehouse,
+ * and exports everything again to a JSON file when completed.
+ */
 
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
@@ -21,11 +32,7 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Date;
 
-/**
- * This program reads a JSON file to retrieve all shipments to warehouses,
- * adds shipments, enables/disables shipments to a warehouse,
- * and exports everything again to a JSON file when completed.
- */
+
 
 public class Main extends Application {
 

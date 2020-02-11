@@ -1,10 +1,14 @@
 package ics372;
-
-import java.util.List;
-
 /**
+ * Class ICS 372 Spring 2020
+ * Programming Assignment 1
+ *
+ * @authors: Valentin Kalenik, Cheng Pha, Luke Pha,Tommy Moua, Tina Martinez, Jesus Flores
+ * <p>
  * This class creates a shipment lists, which allows to get the list of shipments in a warehouse.
  */
+import java.util.List;
+
 public class Shipments {
     private List<Shipment> warehouse_contents;
 
