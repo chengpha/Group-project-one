@@ -1,11 +1,14 @@
 package ics372;
 
 import com.google.gson.Gson;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class manages reading a JSON file and creating warehouses based on shipments.
+ * Allows to retrieve the warehouse list and printing the list.
+ */
 public class Controller {
     private Gson gson = new Gson();
     private List<Warehouse> warehouseList = new ArrayList<>();

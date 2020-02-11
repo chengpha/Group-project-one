@@ -2,6 +2,9 @@ package ics372;
 
 import java.util.List;
 
+/**
+ * This class creates a shipment lists, which allows to get the list of shipments in a warehouse.
+ */
 public class Shipments {
     private List<Shipment> warehouse_contents;
 

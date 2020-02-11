@@ -21,11 +21,18 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Date;
 
+/**
+ * This program reads a JSON file to retrieve all shipments to warehouses,
+ * adds shipments, enables/disables shipments to a warehouse,
+ * and exports everything again to a JSON file when completed.
+ */
 
 public class Main extends Application {
 
+    // starts the GUI
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // sets up the GUI
         Controller controller = new Controller();
         primaryStage.setTitle("Project Assignment 1");
         GridPane mainPane = new GridPane();
@@ -49,6 +56,7 @@ public class Main extends Application {
 
         mainPane.getRowConstraints().addAll(rowConstraint1, rowConstraint1, rowConstraint1, rowConstraint1, rowConstraint2);
 
+        // creates all the buttons needed to operate
         Button fileChooserButton = new Button("Choose File");
         TextArea primaryArea = new TextArea();
         primaryArea.setEditable(false);
@@ -64,6 +72,7 @@ public class Main extends Application {
         exportToJsonButton.setDisable(true);
         GridPane.setHalignment(printAllWarehouseShipmentsButton, HPos.RIGHT);
 
+        // adds all the panes
         mainPane.add(fileChooserButton, 0, 0);
         mainPane.add(warehouseLabel, 0, 1);
         mainPane.add(warehouseComboBox, 1, 1);
@@ -77,6 +86,7 @@ public class Main extends Application {
 
         //Button handlers
         fileChooserButton.setOnAction(a -> {
+            // opens a dialogue box to choose a json file
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("JSON files", "*.json"),
@@ -105,6 +115,7 @@ public class Main extends Application {
             primaryArea.setScrollTop(Double.MAX_VALUE);
         });
 
+        // shows the status of the selected warehouse freight receiving status
         warehouseComboBox.getSelectionModel().selectedItemProperty().addListener((ObservableValue v, Object o, Object n) -> {
             if (warehouseComboBox.getValue() != null) {
                 Warehouse warehouse = controller
@@ -121,6 +132,7 @@ public class Main extends Application {
             }
         });
 
+        // on json button click, open the JSON file and process it
         exportToJsonButton.setOnAction(a -> {
             String location = System.getProperty("user.dir");
             Alert alert = new Alert(Alert.AlertType.NONE);
@@ -145,6 +157,7 @@ public class Main extends Application {
             alert.show();
         });
 
+        // on disable freight button click, disable/enable incoming shipments to this warehouse
         disableEnableFreightButton.setOnAction(a -> {
             Warehouse warehouse = controller
                     .getWarehouseList()
@@ -162,6 +175,7 @@ public class Main extends Application {
             }
         });
 
+        // on print all warehouse shipments button press, print all the warehouses to the user
         printAllWarehouseShipmentsButton.setOnAction(a -> {
             primaryArea.setText(String.format("%s%n%s",
                     primaryArea.getText(),
@@ -169,6 +183,7 @@ public class Main extends Application {
             primaryArea.setScrollTop(Double.MAX_VALUE);
         });
 
+        // exit the program
         closeButton.setOnAction(a -> {
             primaryStage.close();
             System.exit(0);
