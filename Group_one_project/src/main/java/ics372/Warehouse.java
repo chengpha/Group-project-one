@@ -12,12 +12,12 @@ package ics372;
  */
 import com.google.gson.Gson;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 
 public class Warehouse {
     private String warehouse_id;
-    private List<Shipment> shipments = new ArrayList<>();
+    private Collection<Shipment> shipments = new ArrayList<>();
     private boolean freightReceiptEnable = true;
 
     public Warehouse(String warehouse_id) {
