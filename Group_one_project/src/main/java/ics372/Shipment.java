@@ -11,15 +11,13 @@ package ics372;
  * Also allows to retrieve the shipment ID and warehouse ID.
  */
 public class Shipment {
-
-    //instance variables
     private String warehouse_id;
     private String shipment_id;
     private String shipment_method;
     private double weight;
     private long receipt_date;
 
-    public Shipment(String warehouse_id, String shipment_id, String shipment_method, double weight, long receipt_date) {
+    public Shipment(String warehouse_id, String shipment_id, String shipment_method, double weight, long receipt_date){
         this.warehouse_id = warehouse_id;
         this.shipment_id = shipment_id;
         this.shipment_method = shipment_method;
@@ -27,8 +25,21 @@ public class Shipment {
         this.receipt_date = receipt_date;
     }
 
-    //getters
     public String getShipmentId(){ return shipment_id; }
 
     public String getWarehouseId(){ return warehouse_id; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Shipment)) return false;
+        Shipment c = (Shipment) o;
+        return c.shipment_id.equals(shipment_id);
+    }
+
+    @Override
+    public int hashCode() {
+        return shipment_id.hashCode();
+    }
 }
+
