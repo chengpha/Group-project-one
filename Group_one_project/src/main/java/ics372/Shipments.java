@@ -7,16 +7,14 @@ package ics372;
  * <p>
  * This class creates a shipment lists, which allows to get the list of shipments in a warehouse.
  */
-import java.util.List;
+import java.util.Collection;
 
 public class Shipments {
-    private List<Shipment> warehouse_contents;
-
-    public Shipments(List<Shipment> warehouse_contents) {
+    private Collection<Shipment> warehouse_contents;
+    public Shipments(Collection<Shipment> warehouse_contents){
         this.warehouse_contents = warehouse_contents;
     }
-
-    public List<Shipment> getShipmentList() {
+    public Collection<Shipment> getShipmentList(){
         return warehouse_contents;
     }
 }
