@@ -99,27 +99,28 @@ public class Main extends Application {
                     new FileChooser.ExtensionFilter("JSON files", "*.json"),
                     new FileChooser.ExtensionFilter("All files", "*"));
             File file = fileChooser.showOpenDialog(primaryStage);
+            if (file != null) {
+                if (primaryArea.getText().equals("")) {
+                    primaryArea.setText(controller.processJsonInputFile(file));
+                } else {
+                    primaryArea.setText(String.format("%s%n%s",
+                            primaryArea.getText(),
+                            controller.processJsonInputFile(file)));
+                }
 
-            if (primaryArea.getText().equals("")) {
-                primaryArea.setText(controller.processJsonInputFile(file));
-            } else {
-                primaryArea.setText(String.format("%s%n%s",
-                        primaryArea.getText(),
-                        controller.processJsonInputFile(file)));
+                if (warehouseComboBox.getItems().size() > 0) {
+                    warehouseComboBox.getSelectionModel().clearSelection();
+                    warehouseComboBox.getItems().clear();
+                }
+                warehouseComboBox.setItems(FXCollections.observableArrayList(controller.getWarehouseList()));
+                warehouseComboBox.getSelectionModel().selectFirst();
+
+                //enable the controls
+                warehouseComboBox.setDisable(false);
+                disableEnableFreightButton.setDisable(false);
+                exportToJsonButton.setDisable(false);
+                primaryArea.setScrollTop(Double.MAX_VALUE);
             }
-
-            if (warehouseComboBox.getItems().size() > 0) {
-                warehouseComboBox.getSelectionModel().clearSelection();
-                warehouseComboBox.getItems().clear();
-            }
-            warehouseComboBox.setItems(FXCollections.observableArrayList(controller.getWarehouseList()));
-            warehouseComboBox.getSelectionModel().selectFirst();
-
-            //enable the controls
-            warehouseComboBox.setDisable(false);
-            disableEnableFreightButton.setDisable(false);
-            exportToJsonButton.setDisable(false);
-            primaryArea.setScrollTop(Double.MAX_VALUE);
         });
 
         // shows the status of the selected warehouse freight receiving status
