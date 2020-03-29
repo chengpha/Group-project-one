@@ -96,7 +96,7 @@ public class Main extends Application {
             // opens a dialogue box to choose a json file
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("JSON files", "*.json"),
+                    new FileChooser.ExtensionFilter("Compatible files", "*.json", "*.xml"),
                     new FileChooser.ExtensionFilter("All files", "*"));
             File file = fileChooser.showOpenDialog(primaryStage);
             if (file != null) {
