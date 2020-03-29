@@ -10,10 +10,13 @@ package ics372;
  */
 
 import com.google.gson.Gson;
+import org.apache.commons.io.FilenameUtils;
+import org.w3c.dom.*;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.parsers.*;
 
 /**
  * This class manages reading a JSON file and creating warehouses based on shipments.
@@ -35,8 +38,45 @@ public class Controller {
         String msg = "";
 
         try (Reader reader = new FileReader(String.valueOf(f))) {
-            List<Shipment> list = gson.fromJson(reader, Shipments.class).getShipmentList();
-            shipmentList.addAll(list);
+            String ext = FilenameUtils.getExtension(f.getName());
+            if(ext.equals("json")) {
+                List<Shipment> list = (List<Shipment>) gson.fromJson(reader, Shipments.class).getShipmentList();
+                shipmentList.addAll(list);
+            } else {
+                try {
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.parse(f);
+                    doc.getDocumentElement().normalize();
+
+                    // Gets all the shipment lists
+                    NodeList shipmentNodeList = doc.getElementsByTagName("Shipment");
+
+                    // Loop through each shipment
+                    for (int index = 0; index < shipmentNodeList.getLength(); index++) {
+                        Node shipment = shipmentNodeList.item(index);
+
+                        if (shipment.getNodeType() == Node.ELEMENT_NODE) {
+                            Element eElement = (Element) shipment;
+
+                            // Gets all the values needed
+                            String warehouseID = ((Element) (shipment.getParentNode())).getAttribute("id");
+                            String shipmentID =  eElement.getAttribute("id");
+                            String shipmentMethod = eElement.getAttribute("type");
+                            Double weight = Double.parseDouble(doc.getElementsByTagName("Weight").item(index).getTextContent());
+                            Long receiptDate = Long.parseLong(doc.getElementsByTagName("ReceiptDate").item(index).getTextContent());
+
+                            // Creates a shipment and adds it to the list
+                            Shipment s = new Shipment(warehouseID, shipmentID, shipmentMethod, weight, receiptDate);
+                            shipmentList.add(s);
+                        }
+                    }
+
+                    } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
         } catch (FileNotFoundException e) {
             msg = "File not found";
         } catch (IOException e) {
